@@ -9,5 +9,9 @@ function init() {
         });
 }
 
+function createEmbededSound() {
+	var pane = document.getElementById('playing');
+}
+
 // Wait for gadget to load.                                                       
 gadgets.util.registerOnLoadHandler(init);

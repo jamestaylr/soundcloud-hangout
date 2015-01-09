@@ -3,3 +3,9 @@ body {
 	color: white;
 	font-family: 'Roboto', sans-serif;
 }
+
+iframe {
+	height: 166px;
+	width: calc(100% - 50px);
+	margin-left: 25px;
+}

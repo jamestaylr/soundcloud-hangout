@@ -14,7 +14,7 @@
 
 <script src="//plus.google.com/hangouts/_/api/v1/hangout.js"></script>
 
-<input type="text" onkeydown="if (event.keyCode == 13) { createEmbededSound(); return false; }"/>
+<input type="text" size="40" onkeydown="if (event.keyCode == 13) { createEmbededSound(); return false; }"/>
 
 <div id="playing" style="visibility: hidden"></div>
 

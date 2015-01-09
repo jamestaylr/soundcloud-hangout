@@ -24,5 +24,10 @@ function createEmbededSound() {
 	
 }
 
+function encodeURI(uri)
+{
+	return encodeURIComponent(uri).replace(/'/g,"%27").replace(/"/g,"%22");
+}
+
 // Wait for gadget to load.
 gadgets.util.registerOnLoadHandler(init);

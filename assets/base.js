@@ -5,7 +5,6 @@ function init() {
 
 applicationReady = function(event) {
 	if (event.isApiReady) {
-		document.getElementById('playing').style.visibility = 'visible';
 		gapi.hangout.onParticipantsChanged.add(participantsChanged);
 		gapi.hangout.data.onStateChanged.add(stateChanged);
 	}
@@ -19,8 +18,9 @@ stateChanged = function(event) {
 
 	var value = gapi.hangout.data.getValue("current");
 
+	alert('queued!');
 	var a = new SoundObject(value);
-	document.getElementById('playing').innerHTML = a.getInfo();
+	document.getElementById('player').innerHTML = a.getInfo();
 }
 
 function createEmbededSound(event) {
@@ -28,7 +28,6 @@ function createEmbededSound(event) {
 	var uri = encodeURI(event.target.value);
 	
 	var so = new SoundObject(uri);
-	document.getElementById('playing').innerHTML = so.getInfo();
 
 	gapi.hangout.data.setValue("current", uri);
 
@@ -41,7 +40,7 @@ function encodeURI(uri) {
 // Wait for gadget to load.
 gadgets.util.registerOnLoadHandler(init);
 
-//-------------------------------------------------------------------------
+// -------------------------------------------------------------------------
 
 function SoundObject(uri) {
 	this.uri = uri;

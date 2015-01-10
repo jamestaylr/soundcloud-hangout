@@ -4,23 +4,7 @@ body {
 	font-family: 'Roboto', sans-serif;
 }
 
-object {
-	height: 46px;
-	width: 84px;
-	position: absolute;
-}
-
-#playing {
-	margin-top: 4em;
-	width: 100%;
-}
-
-iframe {
-	height: 166px;
-	width: calc(100% - 50px);
-	margin-left: 25px;
-}
-
+/* ------------------------------------------------------------------------- */
 input {
 	border: 0;
 	background:
@@ -44,4 +28,56 @@ input {
 input:focus {
 	border-bottom: 2px solid #f50;
 	outline: none;
+}
+
+object {
+	height: 46px;
+	width: 84px;
+	position: absolute;
+}
+
+/* ------------------------------------------------------------------------- */
+iframe {
+	/* Fixes the gap between the iframe and the table */
+	width: calc(100% + 5px);
+	position: relative;
+	margin: -2px 0 0 -2px;
+}
+
+/* ------------------------------------------------------------------------- */
+table {
+	width: calc(100% - 50px);
+	margin-lrft: 25px;
+	background-color: white;
+	color: black;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	margin-top: 3em;
+	border: 1px solid #E5E5E5;
+}
+
+thead {
+	background-color: #F5F5F5;
+}
+
+thead tr {
+	position: relative;
+	display: block;
+	width: 100%;
+	height: 148px;
+	text-align: center;
+}
+
+thead>tr>th {
+	width: 100%;
+	height: 148px;
+	text-align: center;
+}
+
+tbody {
+	display: block;
+	height: 150px;
+	overflow: auto;
+	width: 100%;
 }

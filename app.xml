@@ -13,7 +13,15 @@
 <body>
 	<object type="image/svg+xml" data="assets/icon.svg"></object>
 	<input type="text" size="40" onkeydown="if (event.keyCode == 13) { createEmbededSound(event); return false; }"/>
-	<div id="playing" style="visibility: hidden"></div>
+	<table>
+		<thead>
+		  <tr id="player">
+		      <th>Please paste a Soundcloud URL in the search box!<th>
+		  </tr>
+		 </thead>
+		 <tbody id="queue">
+		 </tbody>
+	</table>
 </body>
 ]]>
 	</Content>

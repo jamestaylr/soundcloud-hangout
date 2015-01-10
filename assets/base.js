@@ -17,10 +17,20 @@ participantsChanged = function(event) {
 
 stateChanged = function(event) {
 
+	var value = gapi.hangout.data.getValue("current");
+
+	var a = new SoundObject(value);
+	document.getElementById('playing').innerHTML = a.getInfo();
 }
 
-function createEmbededSound() {
-	var pane = document.getElementById('playing');
+function createEmbededSound(event) {
+	
+	var uri = encodeURI(event.target.value);
+	
+	var so = new SoundObject(uri);
+	document.getElementById('playing').innerHTML = so.getInfo();
+
+	gapi.hangout.data.setValue("current", uri);
 
 }
 

@@ -12,7 +12,7 @@
 
 <body>
 	<object type="image/svg+xml" data="assets/icon.svg"></object>
-	<input type="text" size="40" onkeydown="if (event.keyCode == 13) { createEmbededSound(); return false; }"/>
+	<input type="text" size="40" onkeydown="if (event.keyCode == 13) { createEmbededSound(event); return false; }"/>
 	<div id="playing" style="visibility: hidden"></div>
 </body>
 ]]>

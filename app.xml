@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+	<ModulePrefs title="Soundcloud for Hangouts">
+		<Require feature="dynamic-height" />
+		<Require feature="rpc" />
+		<Require feature="views" />
+	</ModulePrefs>
+	<Content type="html" href="app.html">
+	</Content>
+</Module>
+

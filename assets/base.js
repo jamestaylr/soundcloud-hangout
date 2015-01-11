@@ -38,7 +38,6 @@ participantsChanged = function(event) {
 }
 
 // -------------------------------------------------------------------------
-var isPlaying;
 var tracks = [];
 
 stateChanged = function(event) {
@@ -47,17 +46,18 @@ stateChanged = function(event) {
 	var key = changed.key;
 
 	if (key == 'state') {
-		var parsedState = JSON.parse(changed.value);
+		var state = JSON.parse(changed.value);
 
-		if (!(isPlaying == parsedState)) {
-			if (isPlaying) {
-				pauseTrack();
-			} else {
-				playTrack();
+		widget.isPaused(function(data) {
+			var playing = !data;
+			if (!(playing == state)) {
+				if (playing) {
+					widget.pause();
+				} else {
+					widget.play();
+				}
 			}
-
-			isPlaying = !isPlaying;
-		}
+		});
 
 	} else if (key == 'add-track') {
 		var parsedTrack = JSON.parse(changed.value);
@@ -101,26 +101,14 @@ function getRecentObject(data) {
 function loadTrack(track) {
 	var query = track.uri + "?client_id=" + client_id + "&amp;auto_play=true";
 	widget.load(query);
-	isPlaying = true;
-
-}
-
-function playTrack() {
-	widget.play();
-}
-
-function pauseTrack() {
-	widget.pause();
 }
 
 playerPlay = function() {
-	isPlaying = true;
-	gapi.hangout.data.setValue('state', JSON.stringify(isPlaying));
+	gapi.hangout.data.setValue('state', JSON.stringify(true));
 }
 
 playerPause = function() {
-	isPlaying = false;
-	gapi.hangout.data.setValue('state', JSON.stringify(isPlaying));
+	gapi.hangout.data.setValue('state', JSON.stringify(false));
 }
 
 playerSeek = function(data) {

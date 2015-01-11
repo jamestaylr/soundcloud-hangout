@@ -1,6 +1,5 @@
 var widget;
 var client_id = "";
-var tracks = [];
 
 // Wait for gadget to load.
 gadgets.util.registerOnLoadHandler(init);
@@ -24,6 +23,7 @@ function setupWidget() {
 	widget.bind(SC.Widget.Events.PLAY, playerPlay);
 	widget.bind(SC.Widget.Events.FINISH, playerFinish);
 	widget.bind(SC.Widget.Events.PAUSE, playerPause);
+	widget.bind(SC.Widget.Events.SEEK, playerSeek);
 }
 
 applicationReady = function(event) {
@@ -39,25 +39,56 @@ participantsChanged = function(event) {
 
 // -------------------------------------------------------------------------
 var playingTrack;
+var seekPosition;
 var isPlaying;
+var tracks = [];
 
 stateChanged = function(event) {
 
-	var parsedTrack = JSON.parse(gapi.hangout.data.getValue('add-track'));
-	var parsedState = JSON.parse(gapi.hangout.data.getValue('state'));
+	var changed = getRecentObject(gapi.hangout.data.getStateMetadata());
+	var key = changed.key;
 
-	if (!(isPlaying == parsedState)) {
-		if (isPlaying) {
-			pauseTrack();
-		} else {
-			playTrack();
+	if (key == 'state') {
+		var parsedState = JSON.parse(changed.value);
+
+		if (!(isPlaying == parsedState)) {
+			if (isPlaying) {
+				pauseTrack();
+			} else {
+				playTrack();
+			}
+
+			isPlaying = !isPlaying;
 		}
 
-		isPlaying = !isPlaying;
+	} else if (key == 'add-track') {
+		var parsedTrack = JSON.parse(changed.value);
+
+		loadTrack(parsedTrack);
+
 	}
 
-	loadTrack(track);
+}
 
+function getRecentObject(data) {
+
+	var recent;
+	var list = [];
+
+	for ( var key in data) {
+		var object = data[key];
+		list.push(object);
+	}
+
+	recent = list[0];
+
+	for (var i = 1; i < list.length; i++) {
+		if (parseInt(list[i].timestamp) > parseInt(recent.timestamp)) {
+			recent = list[i];
+		}
+	}
+
+	return recent;
 }
 
 function loadTrack(track) {
@@ -77,12 +108,16 @@ function pauseTrack() {
 
 playerPlay = function() {
 	isPlaying = true;
-	gapi.hangout.data.setValue('state', JSON.stringify(state));
+	gapi.hangout.data.setValue('state', JSON.stringify(isPlaying));
 }
 
 playerPause = function() {
 	isPlaying = false;
-	gapi.hangout.data.setValue('state', JSON.stringify(state));
+	gapi.hangout.data.setValue('state', JSON.stringify(isPlaying));
+}
+
+playerSeek = function() {
+
 }
 
 playerFinish = function() {

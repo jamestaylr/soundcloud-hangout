@@ -38,8 +38,6 @@ participantsChanged = function(event) {
 }
 
 // -------------------------------------------------------------------------
-var playingTrack;
-var seekPosition;
 var isPlaying;
 var tracks = [];
 
@@ -65,6 +63,15 @@ stateChanged = function(event) {
 		var parsedTrack = JSON.parse(changed.value);
 
 		loadTrack(parsedTrack);
+
+	} else if (key == 'seek') {
+		var position = JSON.parse(changed.value);
+
+		widget.getPosition(function(data) {
+			if (Math.abs(parseInt(data) - parseInt(position)) > 1000) {
+				widget.seekTo(position);
+			}
+		});
 
 	}
 
@@ -116,8 +123,8 @@ playerPause = function() {
 	gapi.hangout.data.setValue('state', JSON.stringify(isPlaying));
 }
 
-playerSeek = function() {
-
+playerSeek = function(data) {
+	gapi.hangout.data.setValue('seek', JSON.stringify(data.currentPosition));
 }
 
 playerFinish = function() {

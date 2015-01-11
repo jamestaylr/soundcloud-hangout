@@ -37,17 +37,9 @@ object {
 }
 
 /* ------------------------------------------------------------------------- */
-iframe {
-    /* Fixes the gap between the iframe and the table */
-	width: calc(100% + 5px);
-	position: relative;
-	margin: -2px 0 0 -2px;
-}
-
-/* ------------------------------------------------------------------------- */
 table {
 	width: calc(100% - 50px);
-	margin-lrft: 25px;
+	margin-left: 25px;
 	background-color: white;
 	color: black;
 	-webkit-border-radius: 3px;
@@ -59,20 +51,19 @@ table {
 
 thead {
 	background-color: #F5F5F5;
+	width: 100%;
 }
 
-thead tr {
-	position: relative;
-	display: block;
+th {
 	width: 100%;
-	height: 148px;
-	text-align: center;
+	display:block;
+	height: 144px;
 }
 
-thead>tr>th {
-	width: 100%;
-	height: 148px;
-	text-align: center;
+iframe {
+	width: calc(100% + 6px);
+    position: relative;
+    margin: -5px 0 0 -4px;
 }
 
 tbody {

@@ -38,7 +38,7 @@ object {
 
 /* ------------------------------------------------------------------------- */
 iframe {
-	/* Fixes the gap between the iframe and the table */
+    /* Fixes the gap between the iframe and the table */
 	width: calc(100% + 5px);
 	position: relative;
 	margin: -2px 0 0 -2px;

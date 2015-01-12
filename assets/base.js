@@ -67,11 +67,23 @@ stateChanged = function(event) {
 				document.getElementById('target').innerHTML = oembed.html
 						.replace('visual=true&', '').replace('height=\"400\"',
 								'height=\"144\"');
+
+				console.log(document.getElementById('target').innerHTML);
 				setupWidget();
 			});
 
 		} else {
 			tracks.push(parsedTrack);
+			console.log('pushing track')
+			var j = document.getElementById('queue');
+
+			var seconds = Math.trunc(parsedTrack.duration / 1000);
+			var minutes = Math.trunc(seconds / 60);
+			var artwork = parsedTrack.artwork_url;
+
+			j.innerHTML = '<tr><td>' + '<img src=\"' + artwork + '\" \\>'
+					+ '</td><td>' + parsedTrack.title + '</td><td>' + minutes
+					+ ':' + (seconds % 60) + '<td></tr>' + j.innerHTML;
 		}
 
 	} else if (key == 'seek') {

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,300,500');
+
 body {
 	background-color: transparent;
 	color: white;
@@ -68,7 +70,16 @@ iframe {
 
 tbody {
 	display: block;
-	height: 144px;
+	max-height: 144px;
 	overflow: auto;
 	width: 100%;
+}
+
+tbody tr {
+    font-size: 11px;
+    font-family: 'Roboto', sans-serif;
+}
+
+tbody tr td img {
+	height: 30px;
 }

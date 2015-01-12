@@ -89,14 +89,12 @@ stateChanged = function(event) {
 		}
 
 	} else if (key == 'seek') {
-
 		var state = JSON.parse(changed.value);
 
-		if (state.relativePosition == 1) {
+		if (state.relativePosition > 0.995) {
 			if (tracks.length > 0) {
-				var a = tracks.shift();
-				current = a;
-				loadTrack(a);
+				loadTrack(tracks.shift());
+				document.getElementById('queue').deleteRow(0);
 			}
 			return;
 		}
@@ -108,9 +106,7 @@ stateChanged = function(event) {
 						widget.seekTo(state.currentPosition);
 					}
 				});
-
 	}
-
 }
 
 function getRecentObject(data) {
@@ -146,6 +142,7 @@ function embedWidget(initialTrack) {
 }
 
 function loadTrack(track) {
+	current = track;
 	var query = track.uri + "?client_id=" + client_id + "&amp;auto_play=true";
 	widget.load(query);
 }
@@ -157,14 +154,13 @@ function queueTrack(track) {
 	var minutes = Math.trunc(seconds / 60);
 	var artwork = track.artwork_url;
 
-	j.innerHTML = '<tr><td>' + '<img src=\"' + artwork + '\" \\>'
+	j.innerHTML += '<tr><td>' + '<img src=\"' + artwork + '\" \\>'
 			+ '</td><td class=\"title\">' + track.title + ' by ' + '<a href=\"'
 			+ track.user.uri + '\">' + track.user.username + '</a>'
 			+ '</td><td class=\"time\">' + minutes + ':'
 			+ (((seconds % 60) / 100).toFixed(2).toString()).replace('0.', '')
 			+ '</td><td class=\"likes\">' + track.favoritings_count
-			+ '</td><td class=\"plays\">' + track.playback_count + '</td></tr>'
-			+ j.innerHTML;
+			+ '</td><td class=\"plays\">' + track.playback_count + '</td></tr>';
 }
 
 playerPlay = function() {

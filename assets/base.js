@@ -157,9 +157,14 @@ function queueTrack(track) {
 	var minutes = Math.trunc(seconds / 60);
 	var artwork = track.artwork_url;
 
-	j.innerHTML = '<tr><td>' + '<img src=\"' + artwork + '\" \\>' + '</td><td>'
-			+ track.title + '</td><td>' + minutes + ':' + (seconds % 60)
-			+ '<td></tr>' + j.innerHTML;
+	j.innerHTML = '<tr><td>' + '<img src=\"' + artwork + '\" \\>'
+			+ '</td><td class=\"title\">' + track.title + ' by ' + '<a href=\"'
+			+ track.user.uri + '\">' + track.user.username + '</a>'
+			+ '</td><td class=\"time\">' + minutes + ':'
+			+ (((seconds % 60) / 100).toFixed(2).toString()).replace('0.', '')
+			+ '</td><td class=\"likes\">' + track.favoritings_count
+			+ '</td><td class=\"plays\">' + track.playback_count + '</td></tr>'
+			+ j.innerHTML;
 }
 
 playerPlay = function() {

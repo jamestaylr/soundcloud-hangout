@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto:400,300,500');
+@import
+	url('https://fonts.googleapis.com/css?family=Roboto:400,300,500');
 
 body {
 	background-color: transparent;
@@ -58,14 +59,14 @@ thead {
 
 th {
 	width: 100%;
-	display:block;
+	display: block;
 	height: 144px;
 }
 
 iframe {
 	width: calc(100% + 6px);
-    position: relative;
-    margin: -5px 0 0 -4px;
+	position: relative;
+	margin: -5px 0 0 -4px;
 }
 
 tbody {
@@ -76,10 +77,46 @@ tbody {
 }
 
 tbody tr {
-    font-size: 11px;
-    font-family: 'Roboto', sans-serif;
+	font-size: 11px;
+	font-family: 'Roboto', sans-serif;
 }
 
 tbody tr td img {
 	height: 30px;
+}
+
+td.title {
+	width: 140%;
+}
+
+td > a {
+	color: #F50;
+	text-decoration: none;
+}
+
+td > a:hover {
+    text-decoration: underline;
+}
+
+td.plays:before {
+    content: "►";
+}
+
+td.likes:before {
+	content: "♥";
+}
+td.time {
+    color: #C7C7C7;
+}
+
+td.time {
+	color: #C7C7C7;
+}
+
+td.time:before {
+	content: "[";
+}
+
+td.time:after {
+	content: "]";
 }

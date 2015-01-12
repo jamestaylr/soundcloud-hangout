@@ -84,14 +84,23 @@ stateChanged = function(event) {
 			current = parsedTrack;
 
 		} else {
-			tracks.push(parsedTrack);
-			queueTrack(parsedTrack);
+
+			if (current == undefined) {
+				loadTrack(parsedTrack);
+			} else {
+				tracks.push(parsedTrack);
+				queueTrack(parsedTrack);
+			}
+
 		}
 
 	} else if (key == 'seek') {
 		var state = JSON.parse(changed.value);
 
 		if (state.relativePosition > 0.995) {
+
+			current = undefined;
+
 			if (tracks.length > 0) {
 				loadTrack(tracks.shift());
 				document.getElementById('queue').deleteRow(0);

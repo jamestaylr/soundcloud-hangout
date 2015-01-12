@@ -22,20 +22,39 @@ function setupWidget() {
 	widget.bind(SC.Widget.Events.FINISH, playerFinish);
 	widget.bind(SC.Widget.Events.PAUSE, playerPause);
 	widget.bind(SC.Widget.Events.SEEK, playerSeek);
+
 }
 
 applicationReady = function(event) {
 	if (event.isApiReady) {
-		gapi.hangout.onParticipantsChanged.add(participantsChanged);
+		gapi.hangout.onParticipantsEnabled.add(participantsEnabled);
 		gapi.hangout.data.onStateChanged.add(stateChanged);
+
+		var data = gapi.hangout.data.getStateMetadata();
+
+		if ('applicationState' in data) {
+			var state = JSON.parse(data.applicationState.value);
+			embedWidget(state[1]);
+
+			for (var i = 0; i < state[0].length; i++) {
+				queueTrack(state[0][i]);
+			}
+
+		}
 	}
 }
 
-participantsChanged = function(event) {
+participantsEnabled = function(event) {
+	var state = [];
+	state.push(tracks);
+	state.push(current);
+
+	gapi.hangout.data.setValue('applicationState', JSON.stringify(state));
 
 }
 
 // -------------------------------------------------------------------------
+var current;
 var tracks = [];
 
 stateChanged = function(event) {
@@ -61,29 +80,12 @@ stateChanged = function(event) {
 		var parsedTrack = JSON.parse(changed.value);
 
 		if (widget == undefined) {
-			SC.oEmbed(parsedTrack.uri, {
-				auto_play : true
-			}, function(oembed) {
-				document.getElementById('target').innerHTML = oembed.html
-						.replace('visual=true&', '').replace('height=\"400\"',
-								'height=\"144\"');
-
-				console.log(document.getElementById('target').innerHTML);
-				setupWidget();
-			});
+			embedWidget(parsedTrack);
+			current = parsedTrack;
 
 		} else {
 			tracks.push(parsedTrack);
-			console.log('pushing track')
-			var j = document.getElementById('queue');
-
-			var seconds = Math.trunc(parsedTrack.duration / 1000);
-			var minutes = Math.trunc(seconds / 60);
-			var artwork = parsedTrack.artwork_url;
-
-			j.innerHTML = '<tr><td>' + '<img src=\"' + artwork + '\" \\>'
-					+ '</td><td>' + parsedTrack.title + '</td><td>' + minutes
-					+ ':' + (seconds % 60) + '<td></tr>' + j.innerHTML;
+			queueTrack(parsedTrack);
 		}
 
 	} else if (key == 'seek') {
@@ -92,7 +94,9 @@ stateChanged = function(event) {
 
 		if (state.relativePosition == 1) {
 			if (tracks.length > 0) {
-				loadTrack(tracks.shift());
+				var a = tracks.shift();
+				current = a;
+				loadTrack(a);
 			}
 			return;
 		}
@@ -128,9 +132,34 @@ function getRecentObject(data) {
 	return recent;
 }
 
+function embedWidget(initialTrack) {
+	SC.oEmbed(initialTrack.uri, {
+		auto_play : true
+	},
+			function(oembed) {
+				document.getElementById('target').innerHTML = oembed.html
+						.replace('visual=true&', '').replace('height=\"400\"',
+								'height=\"144\"');
+
+				setupWidget();
+			});
+}
+
 function loadTrack(track) {
 	var query = track.uri + "?client_id=" + client_id + "&amp;auto_play=true";
 	widget.load(query);
+}
+
+function queueTrack(track) {
+	var j = document.getElementById('queue');
+
+	var seconds = Math.trunc(track.duration / 1000);
+	var minutes = Math.trunc(seconds / 60);
+	var artwork = track.artwork_url;
+
+	j.innerHTML = '<tr><td>' + '<img src=\"' + artwork + '\" \\>' + '</td><td>'
+			+ track.title + '</td><td>' + minutes + ':' + (seconds % 60)
+			+ '<td></tr>' + j.innerHTML;
 }
 
 playerPlay = function() {

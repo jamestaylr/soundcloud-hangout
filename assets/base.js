@@ -12,12 +12,10 @@ function init() {
 		client_id : client_id,
 	});
 
-	setupWidget();
-
 }
 
 function setupWidget() {
-	var frame = document.getElementById('player');
+	var frame = document.getElementsByTagName("iframe")[0];
 	widget = SC.Widget(frame);
 
 	widget.bind(SC.Widget.Events.PLAY, playerPlay);
@@ -61,12 +59,25 @@ stateChanged = function(event) {
 
 	} else if (key == 'add-track') {
 		var parsedTrack = JSON.parse(changed.value);
-		tracks.push(parsedTrack);
+
+		if (widget == undefined) {
+			SC.oEmbed(parsedTrack.uri, {
+				auto_play : true
+			}, function(oembed) {
+				document.getElementById('target').innerHTML = oembed.html
+						.replace('visual=true&', '').replace('height=\"400\"',
+								'height=\"144\"');
+				setupWidget();
+			});
+
+		} else {
+			tracks.push(parsedTrack);
+		}
 
 	} else if (key == 'seek') {
 
 		var state = JSON.parse(changed.value);
-		
+
 		if (state.relativePosition == 1) {
 			if (tracks.length > 0) {
 				loadTrack(tracks.shift());

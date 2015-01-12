@@ -61,17 +61,26 @@ stateChanged = function(event) {
 
 	} else if (key == 'add-track') {
 		var parsedTrack = JSON.parse(changed.value);
-
-		loadTrack(parsedTrack);
+		tracks.push(parsedTrack);
 
 	} else if (key == 'seek') {
-		var position = JSON.parse(changed.value);
 
-		widget.getPosition(function(data) {
-			if (Math.abs(parseInt(data) - parseInt(position)) > 1000) {
-				widget.seekTo(position);
+		var state = JSON.parse(changed.value);
+		
+		if (state.relativePosition == 1) {
+			if (tracks.length > 0) {
+				loadTrack(tracks.shift());
 			}
-		});
+			return;
+		}
+
+		widget
+				.getPosition(function(data) {
+					if (Math.abs(parseInt(data)
+							- parseInt(state.currentPosition)) > 1000) {
+						widget.seekTo(state.currentPosition);
+					}
+				});
 
 	}
 
@@ -80,18 +89,16 @@ stateChanged = function(event) {
 function getRecentObject(data) {
 
 	var recent;
-	var list = [];
 
 	for ( var key in data) {
 		var object = data[key];
-		list.push(object);
-	}
 
-	recent = list[0];
-
-	for (var i = 1; i < list.length; i++) {
-		if (parseInt(list[i].timestamp) > parseInt(recent.timestamp)) {
-			recent = list[i];
+		try {
+			if (parseInt(object.timestamp) > parseInt(recent.timestamp)) {
+				recent = object;
+			}
+		} catch (TypeError) {
+			recent = object;
 		}
 	}
 
@@ -112,10 +119,11 @@ playerPause = function() {
 }
 
 playerSeek = function(data) {
-	gapi.hangout.data.setValue('seek', JSON.stringify(data.currentPosition));
+	gapi.hangout.data.setValue('seek', JSON.stringify(data));
 }
 
-playerFinish = function() {
+playerFinish = function(data) {
+	gapi.hangout.data.setValue('seek', JSON.stringify(data));
 
 }
 

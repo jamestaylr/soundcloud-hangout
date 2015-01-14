@@ -23,8 +23,7 @@ input {
 	-webkit-box-shadow: 3px 3px 13px 2px rgba(0, 0, 0, 0.75);
 	-moz-box-shadow: 3px 3px 13px 2px rgba(0, 0, 0, 0.75);
 	box-shadow: 3px 3px 13px 2px rgba(0, 0, 0, 0.75);
-	background-color: white;
-	margin-left: 10%;
+	margin-left: 6em;
 	border-bottom: 2px solid transparent;
 }
 
@@ -41,32 +40,37 @@ object {
 
 /* ------------------------------------------------------------------------- */
 table {
-	width: calc(100% - 50px);
+	width: calc(40em - 50px);
 	margin-left: 25px;
-	background-color: white;
-	color: black;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
 	margin-top: 3em;
-	border: 1px solid #E5E5E5;
+	background-color: #4F4E4F;
 }
 
 thead {
-	background-color: #F5F5F5;
+	
 	width: 100%;
+	
 }
 
 th {
 	width: 100%;
 	display: block;
 	height: 144px;
+	padding-right: 2px;
+	margin: -2px 0 0 -2px;
+    position:relative;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    background-color: #F5F5F5;
+	
 }
 
 iframe {
-	width: calc(100% + 6px);
-	position: relative;
-	margin: -5px 0 0 -4px;
+	width: 100%;
 }
 
 tbody {
@@ -74,6 +78,9 @@ tbody {
 	max-height: 144px;
 	overflow: auto;
 	width: 100%;
+	background-color: #4F4E4F;
+    color: #E9E9E9;
+    border-collapse: collapse;
 }
 
 tbody tr {
@@ -83,6 +90,16 @@ tbody tr {
 
 tbody tr td img {
 	height: 30px;
+}
+
+td {
+	padding: 5px 10px 5px 10px;
+	white-space: nowrap;
+	border-bottom: 1px solid #6E6E6E;
+}
+
+tr:last-of-type td {
+	border-bottom: 0;
 }
 
 td.title {
@@ -99,11 +116,11 @@ td > a:hover {
 }
 
 td.plays:before {
-    content: "►";
+    content: "► ";
 }
 
 td.likes:before {
-	content: "♥";
+	content: "♥ ";
 }
 td.time {
     color: #C7C7C7;

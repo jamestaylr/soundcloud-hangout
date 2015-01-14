@@ -38,6 +38,12 @@ object {
 	position: absolute;
 }
 
+.close {
+	background:
+		url(assets/close.svg)
+		no-repeat scroll -3px 11px;
+}
+
 /* ------------------------------------------------------------------------- */
 table {
 	width: calc(40em - 50px);
@@ -50,9 +56,7 @@ table {
 }
 
 thead {
-	
 	width: 100%;
-	
 }
 
 th {
@@ -61,12 +65,11 @@ th {
 	height: 144px;
 	padding-right: 2px;
 	margin: -2px 0 0 -2px;
-    position:relative;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    background-color: #F5F5F5;
-	
+	position: relative;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	background-color: #F5F5F5;
 }
 
 iframe {
@@ -79,8 +82,8 @@ tbody {
 	overflow: auto;
 	width: 100%;
 	background-color: #4F4E4F;
-    color: #E9E9E9;
-    border-collapse: collapse;
+	color: #E9E9E9;
+	border-collapse: collapse;
 }
 
 tbody tr {
@@ -93,9 +96,9 @@ tbody tr td img {
 }
 
 td {
-	padding: 5px 10px 5px 10px;
-	white-space: nowrap;
+	padding: 5px 10px 5px 10px; white-space : nowrap;
 	border-bottom: 1px solid #6E6E6E;
+	white-space: nowrap;
 }
 
 tr:last-of-type td {
@@ -106,24 +109,25 @@ td.title {
 	width: 140%;
 }
 
-td > a {
+td>a {
 	color: #F50;
 	text-decoration: none;
 }
 
-td > a:hover {
-    text-decoration: underline;
+td>a:hover {
+	text-decoration: underline;
 }
 
 td.plays:before {
-    content: "► ";
+	content: "► ";
 }
 
 td.likes:before {
 	content: "♥ ";
 }
+
 td.time {
-    color: #C7C7C7;
+	color: #C7C7C7;
 }
 
 td.time {

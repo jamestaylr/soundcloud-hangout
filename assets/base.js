@@ -200,7 +200,7 @@ function queueTrack(track) {
 					/\B(?=(\d{3})+(?!\d))/g, ",")
 			+ '</td><td class=\"plays\">'
 			+ track.playback_count.toString().replace(/\B(?=(\d{3})+(?!\d))/g,
-					",") + '</td><td class=\"close\">X' + '</td></tr>';
+					",") + '</td><td class=\"close\">' + '</td></tr>';
 }
 
 document.body.onclick = function(e) {

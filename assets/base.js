@@ -94,6 +94,20 @@ stateChanged = function(event) {
 
 		}
 
+	} else if (key == 'remove-track') {
+		var id = JSON.parse(changed.value);
+
+		var i = 0;
+
+		for (; i < tracks.length; i++) {
+			if (tracks[i].id == id) {
+				break;
+			}
+		}
+
+		tracks.splice(i, 1);
+		document.getElementById('queue').deleteRow(i);
+
 	} else if (key == 'seek') {
 		var state = JSON.parse(changed.value);
 
@@ -163,13 +177,38 @@ function queueTrack(track) {
 	var minutes = Math.trunc(seconds / 60);
 	var artwork = track.artwork_url;
 
-	j.innerHTML += '<tr><td>' + '<img src=\"' + artwork + '\" \\>'
-			+ '</td><td class=\"title\">' + track.title + ' by ' + '<a href=\"'
-			+ track.user.uri + '\">' + track.user.username + '</a>'
-			+ '</td><td class=\"time\">' + minutes + ':'
+	j.innerHTML += '<tr id=\"'
+			+ track.id
+			+ '\"><td>'
+			+ '<img src=\"'
+			+ artwork
+			+ '\" \\>'
+			+ '</td><td class=\"title\">'
+			+ track.title
+			+ ' by '
+			+ '<a href=\"'
+			+ track.user.uri
+			+ '\">'
+			+ track.user.username
+			+ '</a>'
+			+ '</td><td class=\"time\">'
+			+ minutes
+			+ ':'
 			+ (((seconds % 60) / 100).toFixed(2).toString()).replace('0.', '')
-			+ '</td><td class=\"likes\">' + track.favoritings_count
-			+ '</td><td class=\"plays\">' + track.playback_count + '</td></tr>';
+			+ '</td><td class=\"likes\">'
+			+ track.favoritings_count.toString().replace(
+					/\B(?=(\d{3})+(?!\d))/g, ",")
+			+ '</td><td class=\"plays\">'
+			+ track.playback_count.toString().replace(/\B(?=(\d{3})+(?!\d))/g,
+					",") + '</td><td class=\"close\">X' + '</td></tr>';
+}
+
+document.body.onclick = function(e) {
+	e = window.event ? event.srcElement : e.target;
+	if (e.className && e.className.indexOf('close') != -1) {
+		var id = e.parentNode.id;
+		gapi.hangout.data.setValue('remove-track', JSON.stringify(id));
+	}
 }
 
 playerPlay = function() {

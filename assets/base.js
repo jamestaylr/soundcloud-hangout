@@ -203,12 +203,28 @@ function queueTrack(track) {
 					",") + '</td><td class=\"close\">' + '</td></tr>';
 }
 
+var searchResults = [];
+
 document.body.onclick = function(e) {
 	e = window.event ? event.srcElement : e.target;
 	if (e.className && e.className.indexOf('close') != -1) {
 		var id = e.parentNode.id;
 		gapi.hangout.data.setValue('remove-track', JSON.stringify(id));
+	} else if (e.className && e.className.indexOf('result') != -1) {
+		var value = e.value.toString();
+
+		for (var i = 0; i < searchResults.length; i++) {
+			if (value == searchResults[i].id) {
+				gapi.hangout.data.setValue('add-track', JSON
+						.stringify(searchResults[i]));
+				break;
+			}
+		}
+
+		document.getElementById('search-results').innerHTML = "";
 	}
+
+	document.getElementById('search-results').innerHTML = "";
 }
 
 playerPlay = function() {
@@ -232,11 +248,19 @@ playerFinish = function(data) {
 
 function createEmbededSound(event) {
 
-	var permalink_url = encodeURI(event.target.value);
+	SC.get('/tracks', {
+		q : event.target.value
+	}, function(tracks) {
+		searchResults = [];
 
-	SC.get('https://api.soundcloud.com/resolve.json?url=' + permalink_url
-			+ '/tracks&client_id=' + client_id, function(result) {
-		gapi.hangout.data.setValue('add-track', JSON.stringify(result));
+		var r = document.getElementById('search-results');
+		r.innerHTML = "";
+
+		for (var i = 0; (i < tracks.length) && (i < 5); i++) {
+			searchResults.push(tracks[i]);
+			r.innerHTML += '<li class=\"result\" value=\"' + tracks[i].id
+					+ '\">' + tracks[i].title + '</li>';
+		}
 	});
 
 }

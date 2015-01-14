@@ -11,7 +11,7 @@ body {
 input {
 	border: 0;
 	background:
-		url(assets/search.svg)
+		url(assets/vector-icons/search.svg)
 		no-repeat scroll 7px 7px;
 	background-color: white;
 	padding: 10px;
@@ -40,7 +40,7 @@ object {
 
 .close {
 	background:
-		url(assets/close.svg)
+		url(assets/vector-icons/close.svg)
 		no-repeat scroll -3px 11px;
 }
 
@@ -124,7 +124,7 @@ td.plays:before {
 
 td.likes:before {
 	content:
-		url(assets/favorite.svg);
+		url(assets/vector-icons/favorite.svg);
 	padding-right: 5px;
 }
 

@@ -47,15 +47,15 @@ ul {
 	padding: 0;
 	background-color: #4F4E4F;
 	margin-left: 5.22em;
-	width: 26.17em;
+	width: 27.4em;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
-	padding: 5px 10px 7px 10px;
 	position: absolute;
 	top: 23px;
 	z-index: 1;
-	opacity: 0.95
+	opacity: 0.95;
+	overflow: hidden;
 }
 
 ul:empty {
@@ -64,6 +64,7 @@ ul:empty {
 
 li {
 	font-size: 12px;
+	padding: 5px 10px 7px 10px;
 }
 
 li:hover {
@@ -113,7 +114,6 @@ tbody {
 
 tbody tr {
 	font-size: 11px;
-	font-family: 'Roboto', sans-serif;
 }
 
 tbody tr td img {
@@ -125,6 +125,8 @@ td {
 	white-space: nowrap;
 	border-bottom: 1px solid #6E6E6E;
 	white-space: nowrap;
+	height: 41px;
+	font-family: 'Roboto', sans-serif;
 }
 
 tr:last-of-type td {
@@ -152,10 +154,6 @@ td.likes:before {
 	content:
 		url(assets/vector-icons/favorite.svg);
 	padding-right: 5px;
-}
-
-td.time {
-	color: #C7C7C7;
 }
 
 td.time {
